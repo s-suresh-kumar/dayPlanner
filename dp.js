@@ -1,96 +1,321 @@
+/*---------- code starts HERE */
+
 $(document).ready(function () {
+  // test flag
+  const test = false;
+
   let currentDate = moment().format("MMMM Do YYYY");
-
   let currentDay = moment().format("dddd"); // for showing day of week.
-
-  // function displayTime() {
-  //     document.getElementById("currentDay").innerHTML = currentTime
-  // }
-  // setInterval(displayTime, 1000)
-  // displayTime()
-
+  // currentDay = "Saturday";
+  let weekendDay = false;
+  if (currentDay == "Saturday" || currentDay == "Sunday") weekendDay = true;
   function displayDate() {
-    //   document.getElementById("currentDay").innerHTML = currentDate;
     $("#currentDay").html(currentDay + ", " + currentDate);
   }
-  let m1;
 
-  function getTimeInHours() {
-    m1 = moment();
-    console.log("MOMENT1", m1.fromNow());
-
-    console.log("MOMENT2", m1.hour());
-  }
-  const timeSlots = [
-    { slot: "09", activity: "hour 09 activity" },
-    { slot: "10", activity: "hour 10 activity" },
-    { slot: "11", activity: "hour 11 activity" },
-    { slot: "12 ", activity: "Lunch And Siesta" },
-    { slot: "13", activity: "hour 13 activity" },
-    { slot: "14", activity: "hour 14 activity" },
-    { slot: "15", activity: "hour 15 activity" },
-    { slot: "16", activity: "hour 16 activity" },
-    { slot: "17", activity: "hour 17 activity" },
-  ];
-
-  function createATimeBlock(timeSlot, activity) {
-    var newDiv = $("<div>");
-    var timeInAmPm;
-    newDiv.attr("class", "row time-block");
-    //newDiv.text("Trial And Error");
-
-    var timeSlotCol = $("<div>");
-    timeSlotCol.attr("class", "col-md-2 hour");
-    if (parseInt(timeSlot) < 12) {
-      timeInAmPm = timeSlot + " AM";
-    } else if (parseInt(timeSlot) == 12) {
-      timeInAmPm = timeSlot + "Noon";
-    } else {
-      timeInAmPm = parseInt(timeSlot) % 12;
-      timeInAmPm += " PM";
-    }
-    timeSlotCol.text(timeInAmPm);
-    newDiv.append(timeSlotCol);
-    var activityCol = $("<div>");
-    //activityCol.attr("class", "col-md-8");
-    activityCol.text(activity);
-    console.log("HOUR", m1.hour());
-    if (m1.hour() < parseInt(timeSlot)) {
-      activityCol.attr("class", "col-md-8 future");
-    } else if (m1.hour() >= parseInt(timeSlot) + 1) {
-      activityCol.attr("class", "col-md-8 past");
-    } else if (m1.hour() == parseInt(timeSlot)) {
-      console.log("PRESENT1:", m1.hour(), timeSlot, parseInt(timeSlot) + 1);
-      activityCol.attr("class", "col-md-8 present");
-    }
-    var saveCol = $("<div>");
-    saveCol.attr("class", "col-md-2");
-
-    var saveBtn = $("<button>");
-
-    // 3. Then give each "letterBtn" the following classes: "letter-button" "letter" "letter-button-color".
-    saveBtn.addClass("saveBtn");
-
-    // 5. Then give each "letterBtns" a text equal to "letters[i]".
-    saveBtn.text("save");
-
-    // 6. Finally, append each "letterBtn" to the "#buttons" div (provided).
-    saveCol.append(saveBtn);
-
-    newDiv.append(timeSlotCol);
-    newDiv.append(activityCol);
-    newDiv.append(saveCol);
-    $("#container").append(newDiv);
-    console.log(newDiv);
-    $(".container").append(newDiv);
-  }
-  // setInterval(displayTime, 1000);
-  // displayTime();
-
+  // get times from moment
   displayDate();
-  getTimeInHours();
+  const now = moment().format("MMMM Do YYYY");
 
-  for (let i = 0; i < timeSlots.length; i++) {
-    createATimeBlock(timeSlots[i].slot, timeSlots[i].activity);
+  // commented out for test in non-standard hours
+  let nowHour24 = moment().format("H");
+  let nowHour12 = moment().format("h");
+
+  // set times for tesitng after hours
+
+  if (test) {
+    nowHour24 = 13;
+    nowHour12 = 1;
   }
+
+  // let $dateHeading = $("#navbar-subtitle");
+  // $dateHeading.text(now);
+  // using font awesome icon https://fontawesome.com/license
+  // change description here - none
+
+  //const saveIcon = "./images/save-regular.svg";
+  // Get stored todos from localStorage
+  // Parsing the JSON string to an object
+
+  let storedPlans = JSON.parse(localStorage.getItem("storedPlans"));
+  let storedDay = JSON.parse(localStorage.getItem("currentDay"));
+
+  if (test) {
+    console.log(storedPlans);
+  }
+
+  // If plans were retrieved from localStorage, update the plan array to it
+
+  if (storedPlans !== null && storedDay === currentDay) {
+    planTextArr = storedPlans;
+    console.log("STORED PLANS NOT EQUAL TO NULL");
+  } else {
+    // this should only occur on first time the app is loaded in the browser
+    // helpfully remind user that lunch is important
+    console.log("STORED PLANS ==EQUAL== TO NULL");
+    localStorage.clear();
+    planTextArr = new Array(9);
+    switch (currentDay) {
+      case "Monday":
+      case "Tuesday":
+      case "Wednesday":
+      case "Thursday":
+      case "Friday":
+        planTextArr[4] = "Lunch and Siesta";
+        break;
+      case "Saturday":
+      case "Sudnday":
+        for (let i = 0; i < planTextArr.length; i++)
+          planTextArr[i] = "Weekend Day, Enjoy Time Off!";
+        break;
+    }
+  }
+  if (test) {
+    console.log("full array of plned text", planTextArr);
+  }
+
+  // set variable referencing planner element
+
+  let $plannerDiv = $("#plannerContainer");
+
+  // clear existing elements
+
+  $plannerDiv.empty();
+
+  if (test) {
+    console.log("current time", nowHour12);
+  }
+
+  // build calendar by row for fix set of hours
+
+  for (let hour = 9; hour <= 17; hour++) {
+    // index for array use offset from hour
+
+    let index = hour - 9;
+
+    // build row components
+
+    let $rowDiv = $("<div>");
+
+    $rowDiv.addClass("row");
+
+    $rowDiv.addClass("plannerRow");
+
+    $rowDiv.attr("hour-index", hour);
+
+    // Start building Time box portion of row
+
+    let $col2TimeDiv = $("<div>");
+
+    $col2TimeDiv.addClass("col-md-2");
+
+    // create timeBox element (contains time)
+
+    const $timeBoxSpn = $("<span>");
+
+    // can use this to get value
+
+    $timeBoxSpn.attr("class", "timeBox");
+
+    // format hours for display
+
+    let displayHour = 0;
+
+    let ampm = "";
+
+    if (hour > 12) {
+      displayHour = hour - 12;
+
+      ampm = "pm";
+    } else {
+      displayHour = hour;
+
+      ampm = "am";
+    }
+
+    // populate timeBox with time
+
+    $timeBoxSpn.text(`${displayHour} ${ampm}`);
+
+    // insert into col inset into timebox
+
+    $rowDiv.append($col2TimeDiv);
+
+    $col2TimeDiv.append($timeBoxSpn);
+
+    // STOP building Time box portion of row
+
+    // START building input portion of row
+
+    // build row components
+
+    let $dailyPlanSpn = $("<input>");
+
+    $dailyPlanSpn.attr("id", `input-${index}`);
+
+    $dailyPlanSpn.attr("hour-index", index);
+
+    $dailyPlanSpn.attr("type", "text");
+
+    $dailyPlanSpn.attr("class", "dailyPlan");
+
+    // access index from data array for hour
+
+    $dailyPlanSpn.val(planTextArr[index]);
+    if (weekendDay || hour < nowHour24) {
+      $dailyPlanSpn.attr("disabled", "true");
+    }
+
+    // create col to control width
+
+    let $col9IptDiv = $("<div>");
+
+    $col9IptDiv.addClass("col-md-9");
+
+    // add col width and row component to row
+
+    $rowDiv.append($col9IptDiv);
+
+    $col9IptDiv.append($dailyPlanSpn);
+
+    // STOP building Time box portion of row
+
+    // START building save portion of row
+
+    let $col1SaveDiv = $("<div>");
+
+    $col1SaveDiv.addClass("col-md-1");
+
+    let $saveBtn = $("<i>");
+    $saveBtn.addClass("button");
+    $saveBtn.attr("id", `saveid-${index}`);
+
+    $saveBtn.attr("save-id", index);
+    if (weekendDay || hour < nowHour24) {
+      $saveBtn.attr("class", "far fa-save saveBtnNoCursor");
+      $saveBtn.attr("disabled", "true");
+    } else {
+      $saveBtn.attr("class", "far fa-save saveBtn");
+    }
+
+    //$saveBtn.attr("class", "saveBtn i:hover");
+    // add col width and row component to row
+    //$saveBtn.addClass("saveBtn");
+    //$saveBtn.text("Save");
+    $rowDiv.append($col1SaveDiv);
+
+    $col1SaveDiv.append($saveBtn);
+
+    // STOP building save portion of row
+
+    // set row color based on time
+
+    updateRowColor($rowDiv, hour);
+
+    // add row to planner container
+
+    $plannerDiv.append($rowDiv);
+  }
+
+  // function to update row color
+
+  function updateRowColor($hourRow, hour) {
+    if (test) {
+      console.log("rowColor ", nowHour24, hour);
+    }
+
+    if (hour < nowHour24) {
+      // $hourRow.css('')
+
+      if (test) {
+        console.log("lessThan");
+      }
+
+      $hourRow.css("background-color", "lightgrey");
+    } else if (hour > nowHour24) {
+      if (test) {
+        console.log("greaterthan");
+      }
+
+      $hourRow.css("background-color", "lightgreen");
+    } else {
+      if (test) {
+        console.log("eqaul");
+      }
+
+      $hourRow.css("background-color", "tomato");
+    }
+  }
+
+  // saves to local storage
+
+  // conclick function to listen for user clicks on plan area
+  /*
+  if (currentDay == "Saturday" || currentDay == "Sunday") {
+    for (let i = 0; i < 9; i++) {
+      $("input-${i}").disabled = true;
+      $("saveid-${i}").disabled = true;
+    }
+  }*/
+  if (currentDay == "Saturday" || currentDay == "Sunday") {
+    $(".dailyPlan").disabled = true;
+    $(".saveBtn").disabled = true;
+  }
+  $;
+  $(document).on("click", "i", function (event) {
+    event.preventDefault();
+
+    if (test) {
+      console.log("click pta before " + planTextArr);
+    }
+
+    let $index = $(this).attr("save-id");
+
+    let inputId = "#input-" + $index;
+
+    let $value = $(inputId).val();
+
+    planTextArr[$index] = $value;
+
+    if (test) {
+      console.log("value ", $value);
+    }
+
+    if (test) {
+      console.log("index ", $index);
+    }
+
+    if (test) {
+      console.log("click pta after " + planTextArr);
+    }
+
+    // remove shawdow pulse class
+
+    $(`#saveid-${$index}`).removeClass("shadowPulse");
+
+    localStorage.setItem("storedPlans", JSON.stringify(planTextArr));
+    localStorage.setItem("currentDay", JSON.stringify(currentDay));
+  });
+
+  // function to color save button on change of input
+
+  $(document).on("change", "input", function (event) {
+    event.preventDefault();
+
+    if (test) {
+      console.log("onChange");
+    }
+
+    if (test) {
+      console.log("id", $(this).attr("hour-index"));
+    }
+
+    // neeed to check for save button
+
+    let i = $(this).attr("hour-index");
+
+    // add shawdow pulse class
+
+    $(`#saveid-${i}`).addClass("shadowPulse");
+  });
 });
