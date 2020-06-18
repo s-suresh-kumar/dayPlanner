@@ -1,34 +1,23 @@
 body {
   font-family: "Open Sans", sans-serif;
-
   font-size: 16px;
-
   line-height: 1;
 }
 
 textarea {
   background: transparent;
-
   border: none;
-
   resize: none;
-
   color: #000000;
-
   border-left: 1px solid black;
-
   padding: 10px;
 }
 
 .jumbotron {
   text-align: center;
-
   background-color: transparent;
-
   color: black;
-
   border-radius: 0;
-
   border-bottom: 10px solid black;
 }
 
@@ -38,59 +27,44 @@ textarea {
 
 .time-block {
   text-align: center;
-
   border-radius: 15px;
 }
 
 .row {
   white-space: pre-wrap;
-
   height: 80px;
-
   border-top: 1px solid white;
 }
 
 .hour {
   background-color: #ffffff;
-
   color: #000000;
-
   border-top: 1px dashed #000000;
 }
 
 .past {
   background-color: #d3d3d3;
-
   color: white;
 }
 
 .present {
   background-color: #ff6961;
-
   color: white;
 }
 
 .future {
   background-color: #77dd77;
-
   color: white;
 }
 
 .saveBtn {
   border: 1px dashed black;
-
   border-top-right-radius: 15px;
-
   border-bottom-right-radius: 15px;
-
   background-color: #06aed5;
-
   font-size: 2.9em;
-
   width: 100%;
-
   height: 100%;
-
   color: white;
   text-align: center;
   cursor: pointer;
@@ -102,19 +76,12 @@ textarea {
 
 .saveBtnNoCursor {
   border: 1px dashed black;
-
   border-top-right-radius: 15px;
-
   border-bottom-right-radius: 15px;
-
   background-color: #06aed5;
-
   font-size: 2.9em;
-
   width: 100%;
-
   height: 100%;
-
   color: white;
   text-align: center;
 
@@ -125,27 +92,16 @@ textarea {
 }
 */ .saveBtn i:hover {
   font-size: 20px;
-
   transition: all 0.3s ease-in-out;
 }
 
 /*Start css*/
 
 body {
-  /* image for background */
-  /*
-  background-image: url("./images/low_contrast_linen.png");
-*/
-  /* font parameters */
-
   font-family: Arial, Helvetica, sans-serif;
-
   font-size: 0.8em;
-
   /* added padding to prevent navbar overlap. (100 based on browser inpector of size) */
-
   padding-top: 90px;
-
   vertical-align: middle;
 }
 
@@ -153,57 +109,36 @@ body {
 
 input {
   background: transparent;
-
   border: none;
-
-  /* so cursor appears */
-
   padding-left: 3px;
 }
 
 .navbar {
   /* background-color: #73919b;   */
-
   background-color: #73919b;
-
   color: #b6d7e2;
-
   /* pulls everything down to push up against bottom border */
-
   padding-bottom: 0;
-
   /* creates solid line for the bottom border  */
-
   border-bottom: solid;
-
   border-bottom-color: #ccc;
-
   width: 100%;
-
   text-align: center;
 }
 
 #navbar-title {
   padding: 0px;
-
   font-size: 30px;
-
   color: linen !important;
-
   /* TODO can we do this without the !important */
-
   text-align: center;
 }
 
 #navbar-subtitle {
   padding: 2px;
-
   font-size: 15px;
-
   color: linen !important;
-
   /* TODO can we do this without the !important */
-
   text-align: center;
 }
 
@@ -217,31 +152,20 @@ input {
 
 #plannerContainer {
   /* background-color: #73919b;   */
-
   background-color: #b6d7e2;
-
   /* provides spacing between the top and bottom nav bars and the content */
-
   margin-top: 20px;
-
   margin-bottom: 80px;
-
   /* provide spaceing around the text */
-
   padding: 40px;
 }
 
 .plannerRow {
   height: 50px;
-
   margin-top: 2px;
-
   margin-bottom: 2px;
-
   font-size: 1em;
-
   line-height: 1.5;
-
   border-radius: 15px;
 }
 
@@ -249,17 +173,11 @@ input {
 
 .timeBox {
   background-color: linen;
-
   color: black;
-
   height: 100%;
-
   width: 100%;
-
   text-align: center;
-
   border-radius: 15px 0px 0px 15px;
-
   display: inline-block;
   vertical-align: middle;
   font-size: 2em;
@@ -272,47 +190,32 @@ input {
 
 .dailyPlan {
   color: white;
-
   font-size: 18px;
   font-weight: bold;
   height: 100%;
-
   width: 100%;
 }
 
 .saveIcon {
   background-color: darkturquoise;
-
   color: linen;
-
   border-radius: 0px 15px 15px 0px;
-
   /* float: right; */
-
   font-size: 1.5em;
-
   width: 100%;
-
   height: 100%;
-
   text-align: center;
 }
 
 .footer {
   /* set text properties */
-
   background-color: #666;
-
   /* sets height of footer*/
-
   height: 10%;
 
   /* sets properties for footer border*/
-
   border-top: solid;
-
   border-top-color: #b6d7e2;
-
   border-top-width: 8px;
 }
 
@@ -321,11 +224,8 @@ input {
   /* forces text across the entire screen so it has a center */
 
   width: 100%;
-
   text-align: center;
-
   font-size: 10px;
-
   color: linen;
 }
 
@@ -334,17 +234,13 @@ input {
 @media (max-width: 768px) {
   .container-fluid {
     /* removes paddding on either side */
-
     padding-left: 0;
-
     padding-right: 0;
   }
 
   .plannerRow {
     height: 100%;
-
     border-radius: 10;
-
     margin: 10px;
   }
 
