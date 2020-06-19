@@ -1,5 +1,7 @@
 # dayPlanner
 
+[![Thumbnail](assets/images/dayPlanner-thumbnail.jpg)](https://s-suresh-kumar.github.io/dayPlanner/)
+
 ## Purpose
 
 Create a JQuery powered Day Planner application that can help the user with scheduling work day schedule. This app will run in the browser and feature dynamically updated HTML and CSS powered by JQuery code. It will also feature a clean and polished user interface and be responsive, ensuring that it adapts to multiple screen sizes.

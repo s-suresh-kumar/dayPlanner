@@ -147,7 +147,7 @@ $(document).ready(function () {
     // add col width and row component to row
     $rowDiv.append($col9IptDiv);
     $col9IptDiv.append($dailyPlanSpn);
-    // STOP building Time box portion of row
+    // STOP building col input plan portion of row
 
     // START building save portion of row
     let $col1SaveDiv = $("<div>");
@@ -187,17 +187,20 @@ $(document).ready(function () {
         console.log("lessThan");
       }
       $hourRow.css("background-color", "lightgrey");
+      $hourRow.css("color", "darkgrey");
     } else if (hour > nowHour24) {
       if (test) {
         console.log("greaterthan");
       }
       $hourRow.css("background-color", "lightgreen");
+      $hourRow.css("color", "darkgreen");
     } else {
       if (test) {
         console.log("eqaul");
       }
 
       $hourRow.css("background-color", "tomato");
+      $hourRow.css("color", "brown");
     }
   }
 
