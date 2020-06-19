@@ -7,9 +7,11 @@ $(document).ready(function () {
   let currentDate = moment().format("MMMM Do YYYY");
   let currentDay = moment().format("dddd"); // for showing day of week.
   //for test purposes
-  //currentDay = "Sunday";
+  //currentDay = "Saturday";
   let weekendDay = false;
-  if (currentDay == "Saturday" || currentDay == "Sunday") weekendDay = true;
+  if (currentDay == "Saturday" || currentDay == "Sunday") {
+    weekendDay = true;
+  }
 
   //Function that displays current day and date
   function displayDate() {
@@ -65,7 +67,7 @@ $(document).ready(function () {
         planTextArr[4] = "Lunch and Siesta";
         break;
       case "Saturday":
-      case "Sudnday":
+      case "Sunday":
         for (let i = 0; i < planTextArr.length; i++)
           planTextArr[i] = "Weekend Day, Enjoy Time Off!";
         break;
@@ -136,7 +138,7 @@ $(document).ready(function () {
 
     // access index from data array for hour
     $dailyPlanSpn.val(planTextArr[index]);
-    if (weekendDay || hour < nowHour24) {
+    if (weekendDay === true || hour < nowHour24) {
       $dailyPlanSpn.attr("disabled", "true");
     }
 
@@ -156,7 +158,7 @@ $(document).ready(function () {
     $saveBtn.addClass("button");
     $saveBtn.attr("id", `saveid-${index}`);
     $saveBtn.attr("save-id", index);
-    if (weekendDay || hour < nowHour24) {
+    if (weekendDay === true || hour < nowHour24) {
       $saveBtn.attr("class", "far fa-save saveBtnNoCursor");
       $saveBtn.attr("disabled", "true");
     } else {
@@ -202,7 +204,7 @@ $(document).ready(function () {
   }
 
   // Disable input and save during week end
-  if (currentDay == "Saturday" || currentDay == "Sunday") {
+  if (weekendDay === true) {
     $(".dailyPlan").disabled = true;
     $(".saveBtn").disabled = true;
   }
