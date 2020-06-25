@@ -37,4 +37,4 @@ The highlight of the app is:
 
 Click on [Deployed Application](https://s-suresh-kumar.github.io/dayPlanner/) to launch JQuery powered dayPlanner app. Depending on when the app / page is loaded, the current day and current time is fetched from third party API (moment). The planned activities are displayed with past hours marked in grey and input field and Save button disabled. The current hour is marked red in background, which can be edited and saved. The future events / hour slots are shown in green background.
 
-Though the weekends and past activities are disabled for editing, the app can easily be modified to make them editable and saveable for all 265 days. Also the app can be modified to have a different start and end hour for a typical work day.
+Though the weekends and past activities are disabled for editing, the app can easily be modified to make them editable and saveable for all 365 days. Also the app can be modified to have a different start and end hour for a typical work day.
